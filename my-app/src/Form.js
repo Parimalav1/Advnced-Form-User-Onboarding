@@ -2,10 +2,11 @@ import React from 'react';
 
 export default function Form(props) {
     const { values, change, submit, disabled, errors } = props;
+    const { checkboxChange } = props;
 
     return (
         <form className='form' onSubmit={submit}>
-            <div style={{backgroundColor: 'white'}}className='form-div'>
+            <div style={{ backgroundColor: 'white' }} className='form-div'>
                 <h2 style={{ color: 'coral' }}>Enter user information</h2>
 
                 <div className='errors'>
@@ -61,8 +62,8 @@ export default function Form(props) {
                         </label>
                     </div>
                     <div style={{ margin: '20px 0' }}>
-                        <label style={{ color: 'green' }}>Terms
-                        <input
+                        <label style={{ color: 'green' }}>Terms:&nbsp;
+                        {/* <input
                                 checked={values.serviceTerms}
                                 value={values.serviceTerms}
                                 onChange={change}
@@ -71,17 +72,18 @@ export default function Form(props) {
                             />
                         </label>
                     </div>
-                    {/* <label>Terms
-                        <input
-                            checked={values.serviceTerms === 'disagree'}
-                            value='disagree'
-                            onChange={change}
-                            name='serviceTerms'
-                            type='radio'
-                        />
-                    </label> */}
+                    <label>Terms */}
+                            <input
+                                value={values.serviceTerms}
+                                checked={values.serviceTerms}
+                                onChange={checkboxChange}
+                                name='serviceTerms'
+                                type='checkbox'
+                            />
+                        </label>
+                    </div>
                 </div >
-                <button style={{ color: 'coral', margin: '20px 20px', padding: '10px 10px' }} disabled={disabled}>Submit</button>
+                <button id="submitBtn" style={{ color: 'coral', margin: '20px 20px', padding: '10px 10px' }} disabled={disabled}>Submit</button>
             </div >
         </form >
     )

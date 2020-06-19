@@ -24,7 +24,7 @@ const initialFormErrors = {
 }
 
 const firstUser = [];
-const initialOff = false;
+const initialOff = true;
 
 function App() {
   const [formValues, setFormValues] = useState(firstFormValues);
@@ -89,12 +89,33 @@ function App() {
     })
   }
 
-  // const onCheckboxChange = evt => {
-  //   const { name, checked } = evt.target
-  //   setFormValues({
-  //     ...formValues: checked,
-  //   })
-  // }
+    const onCheckboxChange = evt => {
+      const { name, checked } = evt.target
+    Yup
+        .reach(FormSchema, name)
+        //we can then run validate using the value
+        .validate(checked)
+        // if the validation is successful, we can clear the error message
+        .then(() => {
+          setError({
+            ...error,
+            [name]: ""
+          });
+        })
+        /* if the validation is unsuccessful, we can set the error message to the message 
+          returned from yup (that we created in our schema) */
+        .catch(err => {
+          setError({
+            ...error,
+            [name]: err.errors[0] // investigate
+          })
+        })
+
+      setFormValues({
+        ...formValues,
+        [name]: checked // NOT AN ARRAY
+      })
+  }
 
   const onSubmit = evt => {
     evt.preventDefault();
@@ -122,9 +143,9 @@ function App() {
 
 
   return (
-    <div style={{background: 'white'}}className="App">
-        <h1 style={{color: 'green'}}>Users</h1>
-        {/* <img src={logo} className="App-logo" alt="logo" />
+    <div style={{ background: 'white' }} className="App">
+      <h1 style={{ color: 'green' }}>Users</h1>
+      {/* <img src={logo} className="App-logo" alt="logo" />
         <p>
           Edit <code>src/App.js</code> and save to reload.
         </p>
@@ -140,7 +161,7 @@ function App() {
         <Form
           values={formValues}
           change={onInputChange}
-          // checkboxChange={onCheckboxChange}
+          checkboxChange={onCheckboxChange}
           submit={onSubmit}
           disabled={off}
           errors={error}

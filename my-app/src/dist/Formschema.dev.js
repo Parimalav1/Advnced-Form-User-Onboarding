@@ -18,7 +18,8 @@ var FormSchema = Yup.object().shape({
   name: Yup.string().min(4, 'Name must be atleast 4 characters long').required('Must include password'),
   password: Yup.string().min(9, 'Password must be atleast 9 characters long').required('Must include letters and numbers'),
   role: Yup.string().oneOf(['Instructor', 'Volunteer', 'Service worker', 'Alumni'], "Please select a role"),
-  serviceTerms: Yup["boolean"]().oneOf([true, false], "Please select one")
+  serviceTerms: Yup["boolean"]().oneOf([true, false], "Please select one") // .oneOf([true], 'Please agree to the terms')
+
 });
 var _default = FormSchema;
 exports["default"] = _default;
